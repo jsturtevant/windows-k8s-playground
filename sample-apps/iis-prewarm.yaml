@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: iis-warmup
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: iis-warmup
+    spec:
+      containers:
+      - name: iis-warmup
+        image: jsturtevant/whoami-aspnet
+        ports:
+          - containerPort: 80
+          - containerPort: 4022
+          - containerPort: 4023
+        readinessProbe: 
+          httpGet:
+            path: /
+            port: 80
+          timeoutSeconds: 3
+          periodSeconds: 10
+          initialDelaySeconds: 2
+        livenessProbe: 
+          httpGet:
+            path: /
+            port: 80
+          timeoutSeconds: 3
+          periodSeconds: 10
+          initialDelaySeconds: 300
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iis-warmup
+  labels:
+    app: iis-warmup
+spec:
+  ports:
+  - name: app
+    port: 80
+    targetPort: 80
+  - name: debug
+    port: 4022
+    targetPort: 4022
+  - name: debug2
+    port: 4023
+    targetPort: 4023
+  selector:
+    app: iis-warmup
+  type: LoadBalancer

@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aspnet
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aspnet
+    spec:
+      containers:
+      - name: aspnet
+        image: jsturtevant/whoami-aspnet
+        ports:
+        - containerPort: 80
+      nodeSelector: 
+        beta.kubernetes.io/os: windows
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspnet
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    app: aspnet

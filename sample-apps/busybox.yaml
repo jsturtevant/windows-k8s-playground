@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: busybox
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        type: busybox
+    spec:
+      containers:
+      - image: busybox
+        name: busybox
+        command:
+          - sleep
+          - "3600"
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      restartPolicy: Always

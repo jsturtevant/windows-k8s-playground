@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: whoami
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+      - image: jwilder/whoami
+        name: whoami
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+  labels:
+    app: whoami
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 8000
+  selector:
+    app: whoami
+  type: LoadBalancer
