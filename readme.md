@@ -24,7 +24,7 @@ Copy output for updating `kubernetes.json` in next step.
 ## Scale
 
 ```bash
-/mnt/c/tools/acs-engine.exe scale --subscription-id b9d9436a-0c07-4fe8-b779-2c1030bd7997 \
+/mnt/c/tools/acs-engine.exe scale --subscription-id <sub-id> \
     --resource-group acsengine-win-193  --location eastus \
     --deployment-dir _output/acsengine-win-193 --new-node-count 3 \
     --node-pool windowspool2 --master-FQDN acsengine-win-193.eastus.cloudapp.azure.com
