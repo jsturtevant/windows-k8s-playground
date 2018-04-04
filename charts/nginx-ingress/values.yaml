@@ -142,8 +142,8 @@ controller:
     configMapKey: ""
 
   service:
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-mode: linuxpool2-availabilitySet-33087051
+    #annotations:
+    #  service.beta.kubernetes.io/azure-load-balancer-mode: linuxpool2-availabilitySet-33087051
     clusterIP: ""
 
     ## List of IP addresses at which the controller services are available
