@@ -1,0 +1,42 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: logging-example
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: logging-example
+    spec:
+      containers:
+      - name: logging-example
+        image: jsturtevant/logger:files
+        volumeMounts:
+        - mountPath: c:\logs
+          name: log-volume
+      - name: log-streamer
+        image: jsturtevant/fluentd:hardcoded
+        volumeMounts:
+        - mountPath: c:\logs
+          name: log-volume
+      volumes:
+      - name: log-volume
+        emptyDir: {}
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logging-example
+  labels:
+    app: logging-example
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 80
+  selector:
+    app: logging-example
+  type: LoadBalancer
