@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: logging-gen
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: logging-gen
+    spec:
+      containers:
+      - name: logging-gen
+        image: jsturtevant/loggen
+        env:
+        - name: runforever
+          value: "true"
+      nodeSelector:
+        beta.kubernetes.io/os: windows
