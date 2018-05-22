@@ -10,7 +10,7 @@ spec:
         type: busybox
     spec:
       containers:
-      - image: busybox
+      - image: radial/busyboxplus:curl
         name: busybox
         command:
           - sleep
