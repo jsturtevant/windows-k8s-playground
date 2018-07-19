@@ -1,18 +1,19 @@
-# k8 1.9 with Windows Containers
+# k8 with Windows Containers
 Playground for playing with Windows on Kubernetes.
 
 ## Create Resource Group and Service Principle
 ```
 az login
-az group create -n acsengine-win -l eastus
 az account set --subscription="${SUBSCRIPTION_ID}"
+az group create -n acsengine-win -l eastus
 az ad sp create-for-rbac --role="Owner" --scopes="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/acsengine-win"
 ```
+
 Copy output for updating `kubernetes.json` in next step.
 
 ## Create the cluster
 - Update fields in `kubernetes.json` (service principle/password/public key)
-- Run ACS Engine to generate output: `acs-engine.exe generate kubernetes.json`
+- Run ACS Engine to generate output: `acs-engine generate kubernetes.json`
 - Deploy cluster: `az group deployment create --name acsenginedeploy -g acsengine-win --template-file "_output/acsengine-win/azuredeploy.json" --parameters "./_output/acsengine-win/azuredeploy.parameters.json"`
 - Set your context: `export  KUBECONFIG=_output/acsengine-win/kubeconfig/kubeconfig.eastus.json`
 - Double check your config: `k config current-context`
