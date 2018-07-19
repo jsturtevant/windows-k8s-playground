@@ -20,7 +20,7 @@ Copy output for updating `kubernetes.json` in next step.
 - see your window nodes and linux nodes: `k get nodes -o wide`
 
 ## Deploy Service
-- [Deploy your first service](https://github.com/Azure/acs-engine/blob/master/docs/kubernetes/windows.md#create-your-first-kubernetes-service): `k apply -f winservice.yaml`
+- [Deploy your first service](https://github.com/Azure/acs-engine/blob/master/docs/kubernetes/windows.md#create-your-first-kubernetes-service): `k apply -f sample-apps/winservice.yaml`
 
 ## Scale
 
