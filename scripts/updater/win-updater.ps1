@@ -1,7 +1,7 @@
 Param(
   [string]$win_user,
   [string]$win_pass,
-  [string]$package,
+  [string]$package
 )
 
 # Constants

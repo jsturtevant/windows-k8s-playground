@@ -1,22 +1,26 @@
 echo "building hcsshim"
-cd $env:GOPATH\src\github.com\Microsoft\hcsshim
+Push-Location $env:GOPATH\src\github.com\Microsoft\hcsshim
 # this is auto set during install by choco
 # set PATH=C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin;%PATH%
 go build -o "./_output/runhcs.exe" ./cmd/runhcs
+Pop-Location
 
 echo "building containerd-cri"
-cd $env:GOPATH/src/github.com/containerd/cri
+Push-Location $env:GOPATH/src/github.com/containerd/cri
 set GOOS=windows 
 make
+Pop-Location
 
 echo "building containerd"
-cd $env:GOPATH/src/github.com/containerd/containerd
+Push-Location $env:GOPATH/src/github.com/containerd/containerd
 set GOOS=windows
 make
+Pop-Location
 
 echo "get latest version of  crictl tools"
-cd $env:GOPATH/src/github.com/kubernetes-sigs/cri-tools
+Push-Location $env:GOPATH/src/github.com/kubernetes-sigs/cri-tools
 make windows
+Pop-Location
 
 echo "copy build binaries to folder"
 $binaryPath = "c:\kubebinaries"
