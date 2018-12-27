@@ -9,7 +9,7 @@ $date = (Get-Date).ToFileTimeUtc()
 $binaryPackageName = "kubebinaries_$date.tar.gz"
 tar -cvzf "$packagePath\$binaryPackageName " $binaryPath
 
-#must: set AZURE_STORAGE_CONNECTION_STRING=""
+#must set: $env:AZURE_STORAGE_CONNECTION_STRING=""
 az storage container create -n $blobContainer
 az storage blob upload -c $blobContainer -f "$packagePath\$binaryPackageName" -n "$binaryPackageName"
 
