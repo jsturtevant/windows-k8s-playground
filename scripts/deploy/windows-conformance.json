@@ -3,7 +3,7 @@
     "properties": {
       "orchestratorProfile": {
         "orchestratorType": "Kubernetes",
-        "orchestratorRelease": "1.12",
+        "orchestratorRelease": "1.13",
         "kubernetesConfig": {
                  "apiServerConfig" : {
                    "--feature-gates": "HyperVContainer=true"
@@ -22,7 +22,7 @@
       "agentPoolProfiles": [
           {
           "name": "windowspool",
-          "count": 2,
+          "count": 1,
           "vmSize": "Standard_D2_v3",
           "availabilityProfile": "AvailabilitySet",
           "osType": "Windows",
@@ -35,7 +35,7 @@
           },
           {
           "name": "linuxpool",
-          "count": 2,
+          "count": 1,
           "vmSize": "Standard_D2_v2",
           "availabilityProfile": "AvailabilitySet",
           "osType": "Linux",
@@ -46,7 +46,7 @@
           "adminUsername": "adminuser",
           "windowsPublisher": "MicrosoftWindowsServer",
           "windowsOffer": "WindowsServerSemiAnnual",
-          "windowsSku": "Datacenter-Core-1803-with-Containers-smalldisk"
+          "windowsSku": "Datacenter-Core-1809-with-Containers-smalldisk"
        },
       "extensionProfiles": [
         {

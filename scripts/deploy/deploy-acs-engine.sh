@@ -9,6 +9,7 @@ set -e -u -o pipefail
     [[ $WINDOWS_AZURE_CNI_URL ]] && optional_args+=("--set orchestratorProfile.kubernetesConfig.azureCNIURLWindows=$WINDOWS_AZURE_CNI_URL" )
     [[ $LINUX_AZURE_CNI_URL ]] && optional_args+=("--set orchestratorProfile.kubernetesConfig.azureCNIURLLinux=$LINUX_AZURE_CNI_URL" )
     [[ $LINUX_HYPERKUBE_IMAGE ]] && optional_args+=("--set orchestratorProfile.kubernetesConfig.customHyperkubeImage=$LINUX_HYPERKUBE_IMAGE" )
+    [[ $WINDOWS_CONTAINERD_URL ]] && optional_args+=("--set orchestratorProfile.kubernetesConfig.windowsContainerdURL=$WINDOWS_CONTAINERD_URL" )
 
     $ACS_ENGINE_PATH/acs-engine deploy -m $CONFIG_PATH/windows-conformance.json \
         -l $DEPLOY_REGION \
