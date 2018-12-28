@@ -23,11 +23,12 @@ $nodes.items | Where-Object { $_.metadata.labels.'beta.kubernetes.io/os' -eq 'wi
   ./kubectl drain $_.status.nodeInfo.machineID
   
   #connect to machine
-  Add-Member -InputObject $_ -MemberType NoteProperty -Name "pssession" -Value (New-PSSession -ComputerName $_.status.nodeInfo.machineID -Credential $cred -UseSSL -Authentication basic)
+  $session = New-PSSession -ComputerName $_.status.nodeInfo.machineID -Credential $cred -UseSSL -Authentication basic
+  Add-Member -InputObject $_ -MemberType NoteProperty -Name "pssession" -Value $session
   Write-Host Connected to $_.status.nodeInfo.machineID
 
   #copy up our new binaries
-  Copy-Item $package -Destination $packageLocation -ToSession $session
+  Copy-Item /app/package/$package -Destination $packageLocation -ToSession $session
 
   # Write-Host Logs:
   $timeStamp = get-date -format 'yyyyMMdd-hhmmss'

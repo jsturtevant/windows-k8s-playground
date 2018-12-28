@@ -2,4 +2,5 @@
 
 # use in conjunction with update.sh
 
-docker run --rm -v ~/.kube/config:/root/.kube/config -v $PWD/$3:/opt/k/out jsturtevant/wink8s-updater:v0.1.0 -win_user $1 -win_pass $2
+docker pull jsturtevant/wink8s-updater:latest
+docker run --rm -v ~/.kube/config:/root/.kube/config -v $PWD:/app/package jsturtevant/wink8s-updater:latest -win_user $1 -win_pass $2 -package $3

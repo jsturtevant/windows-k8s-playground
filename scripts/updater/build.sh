@@ -1,0 +1,1 @@
+docker build -t jsturtevant/wink8s-updater .

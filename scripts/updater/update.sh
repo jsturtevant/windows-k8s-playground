@@ -5,15 +5,22 @@
 #   ./update.sh 12.34.45.6   
 
 MASTERIP=$1
-NEW_BINARIES=${2:-"~/k8s-binaries/"}
+KEY_FILE=${2:-"~/.ssh/id_rsa"}
 SSH_USER=${3:-"adminuser"}
-KEY_FILE=${4:-"~/.ssh/id_rsa"}
+NEW_BINARIES=${4:-"k8s-binaries"}
+PACKAGES=${4:-"k8s-packages"}
 
-echo "zip files and upload to master"
+echo "zip files"
+dt="$(date '+%m%d%Y-%H%M%S')"
+pushd ~/
+tar -cvzf "$PACKAGES/kubebinaries_$dt.tar.gz" $NEW_BINARIES
+popd
 
+echo "add script and files"
+scp -i "$KEY_FILE" update-windows.sh "$SSH_USER@$MASTERIP:"
+scp -i "$KEY_FILE" "~/$PACKAGES/kubebinaries_$dt.tar.gz" "$SSH_USER@$MASTERIP:"
 
-echo "add script to kick off update on windows"
-scp -i "$KEY_FILE" update-windows.sh  "$SSH_USER@$MASTERIP:"
-ssh -t -i "$KEY_FILE" "$SSH_USER@$MASTERIP" "./update-windows.sh $SSH_USER $WIN_PASS $MASTERIP"
+echo "kick off update"
+ssh -t -i "$KEY_FILE" "$SSH_USER@$MASTERIP" "./update-windows.sh $SSH_USER $WIN_PASS kubebinaries_$dt.tar.gz"
 
 echo "complete windows update"

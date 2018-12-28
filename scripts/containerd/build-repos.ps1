@@ -34,3 +34,4 @@ cp $env:GOPATH/src/github.com/containerd/cri/_output/containerd.exe $binaryPath\
 cp $env:GOPATH/src/github.com/containerd/containerd/bin/containerd-shim-runhcs-v1.exe $binaryPath\containerd
 cp $env:GOPATH/src/github.com/Microsoft/hcsshim/_output/runhcs.exe $binaryPath\containerd
 cp $env:GOPATH/src/github.com/kubernetes-sigs/cri-tools/_output/crictl.exe $binaryPath\containerd
+cp ./kubebinaries/containerd/config.toml $binaryPath\containerd
