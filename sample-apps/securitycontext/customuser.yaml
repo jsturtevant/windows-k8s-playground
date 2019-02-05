@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sc-customuser
+  name: sc-customuser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sc-customuser
+  template:
+    metadata:
+      labels:
+        app: sc-customuser
+      name: sc-customuser
+    spec:
+      containers:
+      - name: sc-customuser
+        image: stefanscherer/whoami:windows-amd64-1.8.2-1809 
+        securityContext:
+          windowsOptions:
+            runAsUserName: ContainerUser
+      nodeSelector:
+        beta.kubernetes.io/os: windows

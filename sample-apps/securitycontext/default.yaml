@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sc-default
+  name: sc-default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sc-default
+  template:
+    metadata:
+      labels:
+        app: sc-default
+      name: sc-default
+    spec:
+      containers:
+      - name: sc-default
+        image: stefanscherer/whoami:windows-amd64-1.8.2-1809 
+      nodeSelector:
+        beta.kubernetes.io/os: windows
