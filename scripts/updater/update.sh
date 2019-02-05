@@ -3,7 +3,6 @@
 set -x
 
 # usage: 
-#   export WIN_PASS=<yourpass>
 #   ./update.sh <masterip>
 #
 # 
