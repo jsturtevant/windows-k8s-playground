@@ -12,8 +12,8 @@ KEY_FILE=${3:-"~/.ssh/id_rsa"}
 
 
 collectlogs(){
-    mkdir -p $HOME/k8s-logs/$MASTERIP/$2
-    scp -o "ProxyCommand ssh -W %h:%p $SSH_USER@$MASTERIP" $SSH_USER@$2:'c:\k\*.log' $HOME/k8s-logs/$MASTERIP/$1
+    mkdir -p $HOME/k8s-logs/$MASTERIP/$1
+    scp -r -o "ProxyCommand ssh -W %h:%p $SSH_USER@$MASTERIP" $SSH_USER@$2:'c:\k\*.log' $HOME/k8s-logs/$MASTERIP/$1/
 }
 
 echo "store logs by master ip"
