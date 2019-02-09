@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: liveliness
+  name: liveliness
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: liveliness
+  template:
+    metadata:
+      labels:
+        app: liveliness
+      name: liveliness
+    spec:
+      containers:
+      - name: liveliness
+        image: stefanscherer/whoami:windows-amd64-1.8.2-1809 
+        livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            timeoutSeconds: 2
+      nodeSelector:
+        beta.kubernetes.io/os: windows

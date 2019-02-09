@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: iis-only
+  name: iis-only
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iis-only
+  template:
+    metadata:
+      labels:
+        app: iis-only
+      name: iis-only
+    spec:
+      containers:
+      - name: iis-only
+        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 80
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            timeoutSeconds: 2
+      nodeSelector:
+        beta.kubernetes.io/os: windows

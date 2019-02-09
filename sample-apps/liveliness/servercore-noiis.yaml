@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: servercore-noiis
+  name: servercore-noiis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servercore-noiis
+  template:
+    metadata:
+      labels:
+        app: servercore-noiis
+      name: servercore-noiis
+    spec:
+      containers:
+      - name: servercore-noiis
+        image: jsturtevant/whoami-servercore
+        livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            timeoutSeconds: 2
+      nodeSelector:
+        beta.kubernetes.io/os: windows
