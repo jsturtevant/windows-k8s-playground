@@ -324,6 +324,7 @@ ASALocalRun/
 # MSBuild Binary and Structured Log
 *.binlog
 
-**/user.env
+**/user.env**
+azure.toml
 
 *.exe
