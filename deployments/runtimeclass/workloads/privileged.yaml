@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: privileged
+  labels:
+    app: privileged
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: privileged
+      labels:
+        app: privileged
+    spec:
+      runtimeClassName: windows-privileged
+      containers:
+      - name: test
+        image: e2eteam/busybox:1.29-windows-amd64-1809
+        command:
+          - cmd
+          - "/c"
+          - "ping -t localhost" 
+        resources:
+          limits:
+            cpu: 1
+            memory: 800m
+          requests:
+            cpu: "0.1"
+            memory: 300m
+      nodeSelector:
+        "kubernetes.io/os": windows
+      tolerations:
+        - key: ""
+          operator: "Exists"
+          effect: "NoSchedule"
+  selector:
+    matchLabels:
+      app: privileged

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-exec
+spec:
+  containers:
+  - name: liveness
+    image: mcr.microsoft.com/windows/servercore:ltsc2019
+    args:
+    - powershell
+    - /c
+    - mkdir c:\\tmp; fsutil file createnew c:\\tmp\healthy 100; Start-Sleep -s 30; del  c:\\tmp\healthy;  Start-Sleep -s 600
+    livenessProbe:
+      exec:
+        command: 
+        - cmd 
+        - /c 
+        - dir 
+        - c:\tmp\healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+  nodeSelector:
+    "kubernetes.io/os": windows
+---

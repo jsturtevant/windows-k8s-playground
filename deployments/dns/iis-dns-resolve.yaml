@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dns-resolve
+spec:
+  containers:
+  - name: test-resolve
+    image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+    command: ["powershell.exe"]
+    args: ["/C", "for ($num = 1 ; $num -le 10000 ; $num++){ resolve-dnsname google.com }"]
+  restartPolicy: Always
+  nodeSelector:
+    "kubernetes.io/os": windows
+  tolerations:
+    - key: ""
+      operator: "Exists"
+      effect: "NoSchedule"
+---

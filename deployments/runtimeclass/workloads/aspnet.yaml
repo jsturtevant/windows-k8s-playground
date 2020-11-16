@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspnet-1809-rt-rt
+  labels:
+    app: aspnet-1809-rt
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: aspnet-1809-rt
+      labels:
+        app: aspnet-1809-rt
+    spec:
+      runtimeClassName: windows-2019
+      containers:
+      - name: aspnet
+        image: mcr.microsoft.com/dotnet/framework/samples:aspnetapp-windowsservercore-ltsc2019
+        resources:
+          limits:
+            cpu: 1
+            memory: 800m
+          requests:
+            cpu: .1
+            memory: 300m
+        ports:
+          - containerPort: 80
+      nodeSelector:
+        "kubernetes.io/os": windows
+      tolerations:
+        - key: ""
+          operator: "Exists"
+          effect: "NoSchedule"
+  selector:
+    matchLabels:
+      app: aspnet-1809-rt
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspnet
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+  selector:
+    app: aspnet-1809-rt

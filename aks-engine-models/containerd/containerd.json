@@ -1,0 +1,59 @@
+{
+    "apiVersion": "vlabs",
+    "properties": {
+      "orchestratorProfile": {
+        "orchestratorType": "Kubernetes",
+        "orchestratorRelease": "1.19",
+        "kubernetesConfig": {
+          "networkPlugin": "azure",
+          "containerRuntime": "containerd",
+          "windowsContainerdURL": "https://github.com/containerd/containerd/releases/download/v1.4.0/containerd-1.4.0-windows-amd64.tar.gz",
+          "useManagedIdentity": false
+        }
+      },
+      "masterProfile": {
+        "count": 1,
+        "dnsPrefix": "",
+        "vmSize": "Standard_D2_v2"
+      },
+      "agentPoolProfiles": [
+        {
+          "name": "linuxpool1",
+          "count": 1,
+          "vmSize": "Standard_D2_v2",
+          "availabilityProfile": "VirtualMachineScaleSets"
+        },
+        {
+          "name": "windowspool2",
+          "count": 1,
+          "vmSize": "Standard_D2s_v3",
+          "availabilityProfile": "VirtualMachineScaleSets",
+          "osType": "Windows"
+        }
+      ],
+      "windowsProfile": {
+        "adminUsername": "azureuser",
+        "enableAutomaticUpdates": false,
+        "sshEnabled": true,
+        "windowsPublisher": "microsoft-aks",
+        "windowsOffer": "aks-windows",
+        "windowsSku": "2019-datacenter-core-smalldisk-containerd-2005",
+        "imageVersion": "latest"
+      },
+      "linuxProfile": {
+        "adminUsername": "azureuser",
+        "ssh": {
+          "publicKeys": [
+            {
+              "keyData": ""
+            }
+          ]
+        }
+      },
+      "servicePrincipalProfile": {
+        "clientId": "",
+        "secret": ""
+      }
+    }
+  }
+  

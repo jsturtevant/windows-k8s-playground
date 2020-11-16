@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: whoami-windows
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whoami-windows
+    spec:
+      containers:
+      - image: stefanscherer/whoami:windows-amd64-2.0.1
+        name: whoami-windows
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami-windows
+  labels:
+    app: whoami-windows
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: whoami-windows
+  type: LoadBalancer

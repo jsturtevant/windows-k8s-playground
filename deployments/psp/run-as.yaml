@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: run-as-username-demo
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: run-as-username-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: run-as-username-demo
+    spec:
+      securityContext:
+         windowsOptions:
+           runAsUserName: "ContainerAdministrator"
+      containers:
+      - name: run-as-username-demo
+        image: mcr.microsoft.com/windows/servercore:2004-amd64
+        command: ["ping", "-t", "localhost"]

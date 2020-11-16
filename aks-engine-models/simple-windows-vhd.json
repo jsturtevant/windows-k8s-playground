@@ -1,0 +1,51 @@
+{
+	"apiVersion": "vlabs",
+	"properties": {
+		"orchestratorProfile": {
+			"orchestratorType": "Kubernetes",
+			"orchestratorRelease": "1.17",
+			"kubernetesConfig": {
+				"useManagedIdentity": false
+			}
+		},
+		"masterProfile": {
+			"count": 1,
+			"dnsPrefix": "",
+			"vmSize": "Standard_D2s_v3"
+		},
+		"agentPoolProfiles": [
+			{
+				"name": "agentwin",
+				"count": 1,
+				"vmSize": "Standard_D2s_v3",
+				"osType": "Windows"
+			},
+			{
+				"name": "agentlinux",
+				"count": 1,
+				"vmSize": "Standard_D2_v3"
+			}
+		],
+		"windowsProfile": {
+			"adminUsername": "azureuser",
+			"adminPassword": "replacepassword1234$",
+			"enableAutomaticUpdates": false,
+			"sshEnabled": true,
+			"windowsImageSourceURL": "https://testgridjs.blob.core.windows.net/win10c/Microsoft.Compute/Images/aksengine-vhds-windows-2019/aksengine-1603986313-osDisk.205887fc-9dec-4099-9b95-b4ae6f248c87.vhd"
+		},
+		"linuxProfile": {
+			"adminUsername": "azureuser",
+			"ssh": {
+				"publicKeys": [
+					{
+						"keyData": ""
+					}
+				]
+			}
+		},
+		"servicePrincipalProfile": {
+			"clientId": "",
+			"secret": ""
+		}
+	}
+}

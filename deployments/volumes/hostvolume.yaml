@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostdir
+spec:
+  containers:
+  - name: test
+    image: e2eteam/busybox:1.29-windows-amd64-2004
+    command:
+      - sleep
+      - "3600"
+    volumeMounts:
+    - name: test-volume
+      mountPath: /host
+  restartPolicy: Always
+  volumes:
+  - name: test-volume
+    hostPath:
+        path: "C:/"
+        type: DirectoryOrCreate
+  nodeSelector:
+    "kubernetes.io/os": windows

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iis-1809-rt-rt
+  labels:
+    app: iis-1809-rt
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: iis-1809-rt
+      labels:
+        app: iis-1809-rt
+    spec:
+      runtimeClassName: windows-2019
+      containers:
+      - name: iis
+        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        resources:
+          limits:
+            cpu: 1
+            memory: 800m
+          requests:
+            cpu: .1
+            memory: 300m
+        ports:
+          - containerPort: 80
+      nodeSelector:
+        "kubernetes.io/os": windows
+      tolerations:
+        - key: ""
+          operator: "Exists"
+          effect: "NoSchedule"
+  selector:
+    matchLabels:
+      app: iis-1809-rt
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iis
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+  selector:
+    app: iis-1809-rt
