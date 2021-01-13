@@ -2,29 +2,44 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: iis-only
-  name: iis-only
+    app: iis-liveness
+  name: iis-liveness
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: iis-only
+      app: iis-liveness
   template:
     metadata:
       labels:
-        app: iis-only
-      name: iis-only
+        app: iis-liveness
+      name: iis-liveness
     spec:
       containers:
-      - name: iis-only
+      - name: iis-liveness
         image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
         livenessProbe:
             httpGet:
               scheme: HTTP
               path: /
               port: 80
-            initialDelaySeconds: 120
-            periodSeconds: 10
-            timeoutSeconds: 2
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 20
       nodeSelector:
         beta.kubernetes.io/os: windows
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iis-liveness
+  labels:
+    app: iis-liveness
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 80
+  selector:
+    app: iis-liveness
+  type: LoadBalancer

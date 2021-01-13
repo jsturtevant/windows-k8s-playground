@@ -1,34 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: whoami-windows
+  name: web-httpd
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: whoami-windows
+      app: web-httpd
   template:
     metadata:
       labels:
-        app: whoami-windows
+        app: web-httpd
     spec:
       containers:
-      - image: stefanscherer/whoami:windows-amd64-2.0.1
-        name: whoami-windows
+      - image: k8sprow.azurecr.io/kubernetes-e2e-test-images/httpd:2.4.39-alpine
+        name: web-httpd
       nodeSelector:
         beta.kubernetes.io/os: windows
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: whoami-windows
+  name: web-httpd
   labels:
-    app: whoami-windows
+    app: web-httpd
 spec:
   ports:
     # the port that this service should serve on
   - port: 80
-    targetPort: 8080
+    targetPort: 80
   selector:
-    app: whoami-windows
+    app: web-httpd
   type: LoadBalancer

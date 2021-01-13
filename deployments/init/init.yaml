@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-container
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: init-container
+  template:
+    metadata:
+      labels:
+        app: init-container
+    spec:
+      initContainers:
+      - name: test
+        image: e2eteam/busybox:1.29
+        command:
+          - sleep
+          - "40"
+        volumeMounts:
+          - mountPath: /shared
+            name: shared-volume
+      containers:
+      - image: stefanscherer/whoami:windows-amd64-2.0.1
+        name: init-container
+        volumeMounts:
+          - mountPath: /shared
+            name: shared-volume
+      nodeSelector:
+        beta.kubernetes.io/os: windows
+      volumes:
+      - name: shared-volume
+        persistentVolumeClaim:
+          claimName: shared-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: init-container
+  labels:
+    app: init-container
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: init-container
+  type: LoadBalancer
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: shared-volume
+provisioner: kubernetes.io/azure-file
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=0
+  - gid=0
+  - mfsymlinks
+  - cache=strict
+  - actimeo=30
+parameters:
+  skuName: Standard_LRS
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-volume
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: shared-volume
+  resources:
+    requests:
+      storage: 5Gi
