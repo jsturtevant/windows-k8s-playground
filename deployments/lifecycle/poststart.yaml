@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-poststart-test
+spec:
+  containers:
+  - image: k8sprow.azurecr.io/kubernetes-e2e-test-images/pause:3.2
+    lifecycle:
+      postStart:
+        httpGet:
+          host: 10.244.3.6
+          path: /echo?msg=poststart
+          port: 8080
+    name: pod-with-poststart-http-hook
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  serviceAccountName: default
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+

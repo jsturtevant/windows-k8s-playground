@@ -13,20 +13,68 @@ spec:
         app: init-container
     spec:
       initContainers:
-      - name: test
+      - name: init-test
         image: e2eteam/busybox:1.29
         command:
-          - sleep
-          - "40"
+        - cmd
+        - /c
+        - touch
+        - c:\shared\somefile.txt
+        - '&&'
+        - cmd
+        - /c
+        - sleep
+        - "60"
+        - '&&'
+        - cmd
+        - /c
+        - IF
+        - NOT
+        - EXIST
+        - c:\shared\folder
+        - mkdir
+        - c:\shared\folder
+        - '&&'
+        - cmd
+        - /c
+        - curl.exe
+        - -L
+        - https://gist.githubusercontent.com/jsturtevant/a8caf0d86c8f5bf1d7a1800760b8bc95/raw/932a1019735e2b207e69dd057f5c16b5a97d8975/webrequest.ps1
+        - -o
+        - c:\shared\webrequest.ps1
+        - '&&'
+        - sleep
+        - "40"
         volumeMounts:
           - mountPath: /shared
             name: shared-volume
       containers:
-      - image: stefanscherer/whoami:windows-amd64-2.0.1
-        name: init-container
+      - image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        name: main-container
         volumeMounts:
           - mountPath: /shared
             name: shared-volume
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - cmd
+              - /c
+              - mklink
+              - /d
+              - c:\inetpub\wwwroot\testfolder
+              - c:\shared\folder
+              - '&&'
+              - cmd
+              - /c
+              - mklink
+              - c:\inetpub\wwwroot\somefile.txt
+              - c:\shared\somefile.txt
+              - '&&'
+              - Powershell
+              - c:\shared\webrequest.ps1
+              - -url
+              - http://bing.com
       nodeSelector:
         beta.kubernetes.io/os: windows
       volumes:
