@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: test
-    image: e2eteam/busybox:1.29-windows-amd64-2004
+    image: e2eteam/busybox:1.29
     command:
       - sleep
       - "3600"
