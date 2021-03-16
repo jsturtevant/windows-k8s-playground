@@ -5,7 +5,9 @@
 			"orchestratorType": "Kubernetes",
 			"orchestratorRelease": "1.19",
 			"kubernetesConfig": {
-				"useManagedIdentity": false
+				"useManagedIdentity": false,
+				"azureCNIURLLinux": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.2.2/binaries/azure-vnet-cni-linux-amd64-v1.2.2.tgz",
+        		"azureCNIURLWindows": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.2.2/binaries/azure-vnet-cni-singletenancy-windows-amd64-v1.2.2.zip"
 			}
 		},
 		"masterProfile": {
@@ -18,7 +20,8 @@
 				"name": "agentwin",
 				"count": 1,
 				"vmSize": "Standard_D2s_v3",
-				"osType": "Windows"
+				"osType": "Windows",
+				"osDiskSizeGB": 128
 			},
 			{
 				"name": "agentlinux",

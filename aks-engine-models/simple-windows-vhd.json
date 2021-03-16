@@ -18,6 +18,7 @@
 				"name": "agentwin",
 				"count": 1,
 				"vmSize": "Standard_D2s_v3",
+				"osDiskSizeGB": 128,
 				"osType": "Windows"
 			},
 			{

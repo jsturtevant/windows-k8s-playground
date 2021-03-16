@@ -39,7 +39,7 @@ tar -cvzhf "$PACKAGES/kubebinaries_$dt.tar.gz" .
 popd
 
 echo "updating vm"
-windowsnodes="$(kubectl get nodes -o json | jq -rc '.items | map(select(.metadata.labels."beta.kubernetes.io/os" | contains("windows"))?) | map({ nodename: .metadata.name, nodeip: .status.addresses | map(select(.type | contains("InternalIP"))?) | .[] | .address  })[]')"
+windowsnodes="$(kubectl get nodes -o json | jq -rc '.items | map(select(.metadata.labels."kubernetes.io/os" | contains("windows"))?) | map({ nodename: .metadata.name, nodeip: .status.addresses | map(select(.type | contains("InternalIP"))?) | .[] | .address  })[]')"
 while read -r node; do
     echo "$node"
     nodename="$(echo "$node" | jq -r .nodename)"

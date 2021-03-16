@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: host-rw-test-1
+spec:
+  containers:
+  - name: test
+    image: jsturtevant/busybox:1.29
+    command: ["/bin/sh"]
+    args: ["-c", "echo initial > /test-volume/file && sleep 3600"]
+    volumeMounts:
+    - name: test-volume
+      mountPath: /test-volume
+  restartPolicy: Always
+  volumes:
+  - name: test-volume
+    hostPath:
+        path: "/tmp"
+        type: Directory
+  nodeSelector:
+    "kubernetes.io/os": windows
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: host-rw-test-2
+spec:
+  containers:
+  - name: test
+    image: jsturtevant/busybox:1.29
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 60 && echo overwrite > /test-volume/file && sleep 3600"]
+    volumeMounts:
+    - name: test-volume
+      mountPath: /test-volume
+  restartPolicy: Always
+  volumes:
+  - name: test-volume
+    hostPath:
+        path: "/tmp"
+        type: Directory
+  nodeSelector:
+    "kubernetes.io/os": windows

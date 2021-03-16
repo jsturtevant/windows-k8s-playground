@@ -5,7 +5,8 @@ metadata:
 spec:
   containers:
   - name: test
-    image: e2eteam/busybox:1.29
+    imagePullPolicy: Always
+    image: jsturtevant/busybox:1.29
     command:
       - sleep
       - "3600"

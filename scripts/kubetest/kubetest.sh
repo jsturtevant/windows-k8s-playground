@@ -12,7 +12,7 @@ export KUBE_TEST_REPO_LIST_DOWNLOAD_LOCATION="https://raw.githubusercontent.com/
 export AZ_STORAGE_CONTAINER_NAME="k8s"
 
 #ginkofocus="GMSA"
-ginkofocus="(\[sig-windows\]|\[sig-scheduling\].SchedulerPreemption|\[sig-autoscaling\].\[Feature:HPA\]|\[sig-apps\].CronJob).*(\[Serial\]|\[Slow\])|(\[Serial\]|\[Slow\]).*(\[Conformance\]|\[NodeConformance\])"
+ginkofocus="Windows.volume.mounts"
 
 kubetest --test=true \
     --up \
@@ -30,7 +30,7 @@ kubetest --test=true \
     --aksengine-download-url=https://aka.ms/aks-engine/aks-engine-k8s-e2e.tar.gz \
     --aksengine-public-key=$K8S_SSH_PUBLIC_KEY_PATH \
     --aksengine-private-key=$K8S_SSH_PRIVATE_KEY_PATH \
-    --aksengine-orchestratorRelease=1.20 \
+    --aksengine-orchestratorRelease=1.21 \
     --aksengine-template-url=https://raw.githubusercontent.com/kubernetes-sigs/windows-testing/master/job-templates/kubernetes_containerd_master.json \
     --aksengine-agentpoolcount=2 \
     --test_args="--node-os-distro=windows --ginkgo.focus=$ginkofocus --ginkgo.skip=\[LinuxOnly\]" \
