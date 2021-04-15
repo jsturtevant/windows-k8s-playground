@@ -19,10 +19,21 @@ jobs:
     - name: setup k8s for running tests on windows
       run: go mod vendor
 
-    - name: Run fs util tests
+#     - name: Run fs util tests
+#       run: |
+#         cd pkg/volume/util/fs
+#         go test . -mod=mod
+        
+    - name: Run all _windows tests
       run: |
-        cd pkg/volume/util/fs
-        go test . -mod=mod
+        Get-ChildItem "./" -Recurse -Filter *_windows_test.go |
+        Foreach-Object {
+             write-host $_.FullName
+             pushd $_.Directory
+             ls
+             go test . -mod=mod
+             popd
+        }
     
 # These tests can't be run in container
 #   - name: Run proxy tests
