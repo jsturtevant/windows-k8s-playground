@@ -24,3 +24,10 @@ jobs:
         ls
         cd pkg/volume/util/fs
         go test . -mod=mod
+    
+    - name: Run proxy tests
+      run: |
+        ls
+        cd pkg/proxy/winkernel
+        go test . -mod=mod
+
