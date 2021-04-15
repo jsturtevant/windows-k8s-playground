@@ -16,11 +16,11 @@ jobs:
       with:
         go-version: 1.16
 
-#     - name: setup k8s for running tests on windows
-#       run: go mod vendor
+    - name: setup k8s for running tests on windows
+      run: go mod vendor
 
     - name: Run fs util tests
       run: |
         ls
-        cd pkg/volume/fs/util
+        cd pkg/volume/util/fs
         go test . -mod=mod
