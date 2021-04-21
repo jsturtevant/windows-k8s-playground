@@ -12,7 +12,7 @@ spec:
       labels:
         app: iis-1809-rt
     spec:
-      runtimeClassName: windows-2019
+      runtimeClassName: windows
       containers:
       - name: iis
         image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
@@ -25,12 +25,6 @@ spec:
             memory: 300m
         ports:
           - containerPort: 80
-      nodeSelector:
-        "kubernetes.io/os": windows
-      tolerations:
-        - key: ""
-          operator: "Exists"
-          effect: "NoSchedule"
   selector:
     matchLabels:
       app: iis-1809-rt
