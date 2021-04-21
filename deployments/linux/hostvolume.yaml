@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostdir-linux
+spec:
+  containers:
+  - name: test
+    image: radial/busyboxplus:curl
+    command:
+      - sleep
+      - "3600"
+    volumeMounts:
+    - name: test-volume
+      mountPath: /test-volume
+  restartPolicy: Always
+  volumes:
+  - name: test-volume
+    hostPath:
+        path: "/"
+        type: DirectoryOrCreate
+  nodeSelector:
+    "kubernetes.io/os": linux
