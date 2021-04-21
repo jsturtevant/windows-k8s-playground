@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-consumer
+  labels:
+    app: cpu-consumer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: cpu-consumer
+      labels:
+        app: cpu-consumer
+    spec:
+      containers:
+      - name: cpu-consumer
+        image: mcr.microsoft.com/windows/servercore:ltsc2019
+        args:
+        - powershell
+        - /c
+        - $result = 1; foreach ($number in 1..2147483647) {$result = $result * $number};
+        resources:
+          limits:
+            cpu: 1
+          requests:
+            cpu: 1
+        ports:
+          - containerPort: 80
+      nodeSelector:
+        "kubernetes.io/os": windows
+      tolerations:
+        - key: ""
+          operator: "Exists"
+          effect: "NoSchedule"
+  selector:
+    matchLabels:
+      app: cpu-consumer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iis
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+  selector:
+    app: cpu-consumer

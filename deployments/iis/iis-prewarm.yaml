@@ -1,11 +1,15 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: iis-warmup
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: iis-warmup
   template:
     metadata:
+      name: iis-warmup
       labels:
         app: iis-warmup
     spec:

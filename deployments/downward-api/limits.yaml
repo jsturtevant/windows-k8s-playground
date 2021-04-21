@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-container-downward-api
+spec:
+  containers:
+    - name: client-container
+      image: k8s.gcr.io/e2e-test-images/agnhost:2.26
+      command: 
+      - mounttest
+      - --file_content=/etc/podinfo/requests.memory
+      resources:
+        requests:
+          memory: "32Mi"
+          cpu: "125m"
+        limits:
+          memory: "64Mi"
+          cpu: "250m"
+      volumeMounts:
+        - name: podinfo
+          mountPath: /etc/podinfo
+  volumes:
+    - name: podinfo
+      downwardAPI:
+        items:
+          - path: "cpu_limit"
+            resourceFieldRef:
+              containerName: client-container
+              resource: limits.cpu
+              divisor: 1m
+          - path: "cpu_request"
+            resourceFieldRef:
+              containerName: client-container
+              resource: requests.cpu
+              divisor: 1m
+          - path: "mem_limit"
+            resourceFieldRef:
+              containerName: client-container
+              resource: limits.memory
+              divisor: 1Mi
+          - path: "mem_request"
+            resourceFieldRef:
+              containerName: client-container
+              resource: requests.memory
+              divisor: 1Mi

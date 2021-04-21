@@ -8,6 +8,7 @@ $packageDestination = "c:\temp\dev"
 
 Write-Host "Stop-services"
 Stop-Service kubelet -Force
+Stop-Service kubeproxy -Force
 Stop-Service docker -Force
 
 if ($cleanlogs){
@@ -33,3 +34,4 @@ cp "c:\temp\extracted\$package\*" "C:\k\" -Force -Recurse
 Write-Host "start-services"
 start-service docker
 Start-Service kubelet
+Start-Service kubeproxy

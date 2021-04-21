@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-consumer
+  labels:
+    app: resource-consumer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: resource-consumer
+      labels:
+        app: resource-consumer
+    spec:
+      containers:
+      - name: resource-consumer
+        # https://github.com/kubernetes/kubernetes/pull/92719
+        image: jsturtevant/resource-consumer:1.8
+        # resources:
+        #   limits:
+        #     cpu: 1
+        #   requests:
+        #     cpu: 1
+        ports:
+          - containerPort: 8080
+      nodeSelector:
+        "kubernetes.io/os": windows
+      tolerations:
+        - key: ""
+          operator: "Exists"
+          effect: "NoSchedule"
+  selector:
+    matchLabels:
+      app: resource-consumer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resource-consumer
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  selector:
+    app: resource-consumer
