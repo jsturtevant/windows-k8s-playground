@@ -3,12 +3,15 @@
     "properties": {
       "orchestratorProfile": {
         "orchestratorType": "Kubernetes",
-        "orchestratorRelease": "1.19",
+        "orchestratorRelease": "1.21",
         "kubernetesConfig": {
           "networkPlugin": "azure",
           "containerRuntime": "containerd",
-          "windowsContainerdURL": "https://github.com/containerd/containerd/releases/download/v1.4.3/containerd-1.4.3-windows-amd64.tar.gz",
-          "useManagedIdentity": false
+          "windowsContainerdURL": "https://github.com/containerd/containerd/releases/download/v1.4.4/containerd-1.4.4-windows-amd64.tar.gz",
+          "useManagedIdentity": false,
+          "kubeletConfig": {
+              "-v": "5"
+          }
         }
       },
       "masterProfile": {

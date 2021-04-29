@@ -3,11 +3,14 @@
 	"properties": {
 		"orchestratorProfile": {
 			"orchestratorType": "Kubernetes",
-			"orchestratorRelease": "1.19",
+			"orchestratorRelease": "1.21",
 			"kubernetesConfig": {
 				"useManagedIdentity": false,
 				"azureCNIURLLinux": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.2.2/binaries/azure-vnet-cni-linux-amd64-v1.2.2.tgz",
-        		"azureCNIURLWindows": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.2.2/binaries/azure-vnet-cni-singletenancy-windows-amd64-v1.2.2.zip"
+        		"azureCNIURLWindows": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.2.2/binaries/azure-vnet-cni-singletenancy-windows-amd64-v1.2.2.zip",
+				"kubeletConfig": {
+					"-v": "5"
+				}
 			}
 		},
 		"masterProfile": {
@@ -36,7 +39,8 @@
 			"sshEnabled": true,
 			"windowsPublisher": "microsoft-aks",
 			"windowsOffer": "aks-windows",
-            "windowsSku": "2019-datacenter-core-smalldisk-2012"
+			"windowsSku": "2019-datacenter-core-smalldisk-2101",
+			"imageVersion": "latest"
 		},
 		"linuxProfile": {
 			"adminUsername": "azureuser",
