@@ -16,7 +16,7 @@ spec:
   volumes:
   - name: test-volume
     hostPath:
-        path: "C:/tmp"
+        path: "C:/"
         type: DirectoryOrCreate
   nodeSelector:
     "kubernetes.io/os": windows
