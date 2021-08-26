@@ -1,20 +1,23 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: hostdir
+  name: hostdir-aksnpwin000002
 spec:
   containers:
-  - name: test
+  - name: hostdir
     image: e2eteam/busybox:1.29
+    securityContext:
+      windowsOptions:
+        runAsUserName: ContainerAdministrator
     command:
       - sleep
-      - "3600"
+      - "6600"
     volumeMounts:
-    - name: test-volume
-      mountPath: /test-volume
+    - name: host-volume
+      mountPath: /host
   restartPolicy: Always
   volumes:
-  - name: test-volume
+  - name: host-volume
     hostPath:
         path: "C:/"
         type: DirectoryOrCreate

@@ -7,9 +7,14 @@
         "kubernetesConfig": {
           "networkPlugin": "azure",
           "containerRuntime": "containerd",
+          "windowsContainerdURL": "https://github.com/kubernetes-sigs/sig-windows-tools/releases/download/windows-containerd-nightly/windows-containerd.tar.gz",
           "useManagedIdentity": false,
           "kubeletConfig": {
-              "-v": "5"
+              "-v": "5",
+              "--feature-gates": "WindowsHostProcessContainers=true"
+          },
+          "apiServerConfig": {
+            "--feature-gates": "WindowsHostProcessContainers=true"
           }
         }
       },

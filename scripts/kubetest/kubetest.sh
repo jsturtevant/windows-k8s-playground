@@ -12,7 +12,7 @@ export KUBE_TEST_REPO_LIST_DOWNLOAD_LOCATION="https://raw.githubusercontent.com/
 export AZ_STORAGE_CONTAINER_NAME="k8s"
 
 #ginkofocus="GMSA"
-ginkofocus="Windows.volume.mounts"
+ginkofocus="Services.should.be.able.to.create.a.functioning.NodePort.service.for.Windows"
 
 kubetest --test=true \
     --up \
@@ -33,7 +33,7 @@ kubetest --test=true \
     --aksengine-orchestratorRelease=1.21 \
     --aksengine-template-url=https://raw.githubusercontent.com/kubernetes-sigs/windows-testing/master/job-templates/kubernetes_containerd_master.json \
     --aksengine-agentpoolcount=2 \
-    --test_args="--node-os-distro=windows --ginkgo.focus=$ginkofocus --ginkgo.skip=\[LinuxOnly\]" \
+    --test_args="--node-os-distro=windows --ginkgo.focus=$ginkofocus --ginkgo.skip=\[LinuxOnly\] --delete-namespace-on-failure=false" \
     --ginkgo-parallel=8
 
 mv $HOME/tmp* $ARTIFACTS
@@ -49,3 +49,7 @@ mv $HOME/tmp* $ARTIFACTS
 # export GINKGO_UNTIL_IT_FAILS=true
 # export GINKGO_PARALLEL_NODES=8
 # ./hack/ginkgo-e2e.sh --node-os-distro=windows --ginkgo.focus=Downward.API.volume.should.provide.container --ginkgo.skip="\[LinuxOnly\]" --report-dir=/home/jstur/out/kubetest --disable-log-dump=true 
+
+
+# https://raw.githubusercontent.com/kubernetes-sigs/windows-testing/master/job-templates/kubernetes_release_staging.json
+# https://raw.githubusercontent.com/kubernetes-sigs/windows-testing/master/job-templates/kubernetes_containerd_master.json

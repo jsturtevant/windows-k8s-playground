@@ -6,8 +6,8 @@
 			"orchestratorRelease": "1.21",
 			"kubernetesConfig": {
 				"useManagedIdentity": false,
-				"azureCNIURLLinux": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.2.2/binaries/azure-vnet-cni-linux-amd64-v1.2.2.tgz",
-        		"azureCNIURLWindows": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.2.2/binaries/azure-vnet-cni-singletenancy-windows-amd64-v1.2.2.zip",
+				"azureCNIURLLinux": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.4.4/binaries/azure-vnet-cni-linux-amd64-v1.4.4.tgz",
+        		"azureCNIURLWindows": "https://kubernetesartifacts.azureedge.net/azure-cni/v1.4.4/binaries/azure-vnet-cni-singletenancy-windows-amd64-v1.4.4.zip",
 				"kubeletConfig": {
 					"-v": "5"
 				}
@@ -47,7 +47,7 @@
 			"ssh": {
 				"publicKeys": [
 					{
-						"keyData": ""
+						"keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCPJcSQYUAvlcV3V06IbD9mEgVFVdlh8Bu0mEhh6ttawURn8sh/XkFrHEWH+aKsRtRzOaRKQRYput/PtIGckjkLY1D38Ul/etpDPQ5QvKQpo4lfogMx8lt6MtAweHA+/hG7Iky4h2i0t7Uyl66BcTlBLSoYjiXT953pPg9+CWmDjuYPiBFoLA7EFh+OwO1xVQqrtIFbILwW5/wR1bGzucaFu7GD8hUKnE+dnwxiGvwzp803gn//LPPEVP6lpEBKYbX+AGkreqqO97Ezp06iv83pCRxwTAJlIWN4dSwUz/BZd8x6D9zKmn+seE3VGBkbsmS10IF3Ec26RhShZcCN0fz jstur@jstur-home"
 					}
 				]
 			}

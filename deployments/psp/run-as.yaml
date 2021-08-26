@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: run-as-username-demo
-  namespace: default
+  namespace: psp-example
 spec:
   selector:
     matchLabels:
@@ -15,8 +15,8 @@ spec:
     spec:
       securityContext:
          windowsOptions:
-           runAsUserName: "ContainerAdministrator"
+           runAsUserName: "ContainerUser"
       containers:
       - name: run-as-username-demo
-        image: mcr.microsoft.com/windows/servercore:2004-amd64
+        image: mcr.microsoft.com/windows/servercore:ltsc2019
         command: ["ping", "-t", "localhost"]

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busyboxwindows
+spec:
+  securityContext:
+    windowsOptions:
+      hostProcess: true
+      runAsUserName: "NT AUTHORITY\\SYSTEM"
+  hostNetwork: true
+  containers:
+  - name: test
+    imagePullPolicy: Always
+    image: jsturtevant/busybox:1.29
+    command:
+      - ping
+      - -t
+      - 127.0.0.1
+  restartPolicy: Always
+  nodeSelector:
+    "kubernetes.io/os": windows
+  tolerations:
+    - key: ""
+      operator: "Exists"
+      effect: "NoSchedule"
+---

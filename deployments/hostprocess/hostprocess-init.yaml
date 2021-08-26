@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostprocess-init
+  # annotations:
+  #   microsoft.com/hostprocess-inherit-user: "true"
+spec:
+  securityContext:
+    windowsOptions:
+      hostProcess: true
+      runAsUserName: "NT AUTHORITY\\system"
+  hostNetwork: true
+  initContainers:
+    - name: test-init
+      image: jsturtevant/agnhost:2.33-1-windows-amd64-1809
+      command:
+        - powershell.exe
+        - -c
+        - Set-Content 
+        - -Path 
+        - /test-file.txt 
+        - -Value 
+        - test
+  containers:
+  - name: test
+    imagePullPolicy: Always
+    image: jsturtevant/agnhost:2.33-1-windows-amd64-1809
+    command:
+      - powershell.exe
+      - -c
+      - ls 
+      - /test-file3.txt
+  restartPolicy: Never
+  nodeSelector:
+    "kubernetes.io/os": windows
+  tolerations:
+    - key: ""
+      operator: "Exists"
+      effect: "NoSchedule"
+---

@@ -25,9 +25,9 @@ updateNode(){
     popd
 
     echo "kick off update"
-    kubectl drain $1
+    #kubectl drain $1
     ssh -i "$KEY_FILE" -o "ProxyCommand ssh -i $KEY_FILE -W %h:%p $SSH_USER@$PUBIP" "$SSH_USER@$2" "powershell -f c:/temp/dev/win-updater.ps1 $3"
-    kubectl uncordon $1
+    #kubectl uncordon $1
 }
 
 mkdir -p $PACKAGES

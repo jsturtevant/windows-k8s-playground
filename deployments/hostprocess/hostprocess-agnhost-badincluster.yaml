@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostprocess-agnhost-older-client
+spec:
+  securityContext:
+    windowsOptions:
+      hostProcess: true
+      runAsUserName: "NT AUTHORITY\\SYSTEM"
+  hostNetwork: true
+  containers:
+  - name: test
+    imagePullPolicy: Always
+    # this image doesn't have the code to talk to the api server
+    image: k8s.gcr.io/e2e-test-images/agnhost:2.32
+    command:
+      - powershell
+      - -c
+      - start-process
+      - "-wait"
+      - "-nonewwindow"
+      - "$env:CONTAINER_SANDBOX_MOUNT_POINT\\agnhost"
+    args:
+      - "inclusterclient --poll-interval 5"
+  restartPolicy: Always
+  nodeSelector:
+    "kubernetes.io/os": windows
+  tolerations:
+    - key: ""
+      operator: "Exists"
+      effect: "NoSchedule"
+---
