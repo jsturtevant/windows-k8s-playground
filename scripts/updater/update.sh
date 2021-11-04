@@ -9,7 +9,7 @@ set -e -u -o pipefail
 # 
 PUBIP=${1}
 KEY_FILE=${2:-"~/.ssh/id_rsa"}
-SSH_USER=${3:-"azureuser"}
+SSH_USER=${3:-"capi"}
 NEW_BINARIES=${4:-"$GOPATH/src/k8s.io/kubernetes/_output/dockerized/bin/windows/amd64"}
 PACKAGES=${5:-"$HOME/k8s-packages"}
 FILE_ROOT=$(dirname "${BASH_SOURCE[0]}")
