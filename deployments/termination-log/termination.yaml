@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+spec:
+  containers:
+  - name: test
+    imagePullPolicy: Always
+    securityContext:
+      windowsOptions:
+        runAsUserName: ContainerUser
+    terminationMessagePath: /dev/termination-custom-log
+    image: registry.k8s.io/e2e-test-images/busybox:1.36.1-1
+    command:
+      - sleep
+      - "3600"
+  restartPolicy: Always
+  nodeSelector:
+    "kubernetes.io/os": windows
+  tolerations:
+    - key: ""
+      operator: "Exists"
+      effect: "NoSchedule"
+---
