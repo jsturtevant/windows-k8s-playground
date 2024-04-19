@@ -17,7 +17,12 @@ spec:
         name: whoami-windows
         args: ["test-webserver"]
       nodeSelector:
-        beta.kubernetes.io/os: windows
+        kubernetes.io/os: windows
+      tolerations:
+        - key: "OS"
+          operator: "Equal"
+          value: "Windows"
+          effect: "NoSchedule"
 ---
 apiVersion: v1
 kind: Service
