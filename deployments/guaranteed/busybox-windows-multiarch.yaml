@@ -20,8 +20,4 @@ spec:
   restartPolicy: Always
   nodeSelector:
     "kubernetes.io/os": windows
-  tolerations:
-    - key: ""
-      operator: "Exists"
-      effect: "NoSchedule"
 ---
